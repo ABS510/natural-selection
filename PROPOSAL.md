@@ -8,12 +8,14 @@ The program will display the simulation (most probably as circles representing o
 
 #### Development Timeline (Tentative)
 ##### Week 1: 
-- A class for organisms and a class for the environment will be created and their basic functionality will be implemented.
-- Using Cinder, the application can display a part of the simulation in which the organisms will able to move around the environment.
+- A class for organisms and a class for the environment will be created and their basic functionality will be implemented. 
+- Additional classes and structs like those for food, genes, etc will also be created.
+- Most of the logic for the population evolution will be implemented.
 
 ##### Week 2:
 - The organisms and environment completely interact with each other.
-- The major logic for the population evolution will be implemented.
+- The logic for the population evolution will be completely implemented.
+- Using Cinder, the application can display a part of the simulation in which the organisms will able to move around the environment.
 
 ##### Week 3:
 - A graph of the population will be displayed.
