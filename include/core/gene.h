@@ -9,15 +9,15 @@ class Gene {
  public:
   /**
    * Constructor to create a gene object
-   * @param transfer_coefficient- Number corresponding to how likely a genetic
-   * trait will change
+   * @param transfer_coefficient- A number corresponding to how much and how likely
+   * a genetic trait will change
    */
   Gene(double transfer_coefficient);
 
   /**
    * Constructor to create a gene object
-   * @param transfer_coefficient- Number corresponding to how likely a genetic
-   * trait will change
+   * @param transfer_coefficient- A number corresponding to how much and how likely
+   * a genetic trait will change
    * @param max_percent_change- The maximum percentage by which a genetic trait
    * can change over a single evolution
    */
