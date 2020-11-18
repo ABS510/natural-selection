@@ -5,13 +5,13 @@ namespace naturalselection {
 
 Gene::Gene(double transfer_coefficient) {
   transfer_coefficient_ = transfer_coefficient;
-  max_percent_change_ = 0.1;
+  max_percent_change_ = 0.15;
 }
 
 Gene::Gene(double transfer_coefficient, double max_percent_change) {
   transfer_coefficient_ = transfer_coefficient;
   if (max_percent_change < 0) {
-    throw std::out_of_range("max_percentage change must be between 0 and 1");
+    throw std::out_of_range("max_percentage change must be above 0!");
   }
   max_percent_change_ = max_percent_change;
 }
@@ -21,8 +21,11 @@ double Gene::CalculateTraitChange(double trait_value, double random_num) {
     throw std::invalid_argument("Random number is greater than 1");
   }
 
-  double change_squared = -log(abs(random_num)) / transfer_coefficient_;
-  double trait_change_multiplier = sqrt(change_squared);
+  double trait_change_multiplier = max_percent_change_;
+  if (random_num != 0) {
+    double change_squared = -log(abs(random_num)) / transfer_coefficient_;
+    trait_change_multiplier = sqrt(change_squared);
+  }
 
   if (trait_change_multiplier > max_percent_change_) {
     trait_change_multiplier = max_percent_change_;
