@@ -44,10 +44,10 @@ TEST_CASE("Calculate Trait Changes") {
 
 TEST_CASE("Test Generate Evolved Trait") {
   Gene gene(30, 0.2);
-  double avg = 0;
-  for (int i = 0; i < 100; i++) {
-    avg += abs(gene.GenerateEvolvedTrait(100) - 100);
+  double avg_difference = 0;
+  for (size_t i = 0; i < 100; i++) {
+    avg_difference += abs(gene.GenerateEvolvedTrait(100) - 100);
   }
-  avg = avg / 100;
-  REQUIRE((avg < 20) & (avg > 10));
+  avg_difference = avg_difference / 100;
+  REQUIRE((avg_difference < 20) & (avg_difference > 10));
 }
