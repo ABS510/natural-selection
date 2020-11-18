@@ -100,6 +100,21 @@ class Organism {
    */
   static void SetMaximumEnergy(double max_energy);
 
+  /**
+   * Getter method for speed
+   * @return speed_
+   */
+  double speed() {
+    return speed_;
+  }
+
+  /**
+   * Getter method for size
+   * @return size_
+   */
+  double size() {
+    return size_;
+  }
  private:
   // Genetic traits which are constant for a given organism
   const double speed_;
