@@ -61,6 +61,17 @@ class Organism {
   Organism Replicate() const;
 
   /**
+   * Function to expend the energy of the organism
+   * @return the energy expended
+   */
+  double ExpendEnergy();
+
+  /**
+   * Function to update the state of the organism during the simulation
+   */
+  void Update();
+
+  /**
    * Function to set the gene for speed of all the organisms
    * @param transfer_coefficient- The transfer coefficient of the gene
    * @param max_percent_change- The maximum change in a trait value from one

@@ -49,6 +49,19 @@ void Organism::ResetForDay(glm::vec2 pos, glm::vec2 vel) {
   current_energy_expended_ = 0;
 }
 
+double Organism::ExpendEnergy() {
+  double energy_expended = speed_*speed_ + size_*size_*size_;
+  current_energy_expended_ += energy_expended;
+  return energy_expended;
+}
+
+void Organism::Update() {
+  if (current_energy_expended_ < max_energy_) {
+    Move();
+    ExpendEnergy();
+  }
+}
+
 void Organism::SetSpeedGene(double transfer_coefficient,
                            double max_percent_change) {
   speed_gene_ = Gene(transfer_coefficient, max_percent_change);
