@@ -49,5 +49,5 @@ TEST_CASE("Test Generate Evolved Trait") {
     avg_difference += abs(gene.GenerateEvolvedTrait(100) - 100);
   }
   avg_difference = avg_difference / 100;
-  REQUIRE((avg_difference < 20) & (avg_difference > 10));
+  REQUIRE(((avg_difference < 20) && (avg_difference > 10)));
 }

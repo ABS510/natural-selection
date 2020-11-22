@@ -28,13 +28,16 @@ TEST_CASE("Will Replicate") {
 TEST_CASE("Replicate") {
   Organism::SetSizeGene(100, 0.15);
   Organism::SetSpeedGene(100, 0.1);
-  Organism parent(100, 100);
+  Organism parent1(100, 100);
+  Organism parent2(50,200);
 
   for(size_t i = 0; i < 100; i++) {
-    Organism child = parent.Replicate();
-    REQUIRE(90 <= child.speed());
-    REQUIRE (child.speed() <= 110);
-    REQUIRE(85 <= child.size());
-    REQUIRE(child.size() <= 115);
+    Organism child1 = parent1.Replicate();
+    REQUIRE((90 <= child1.speed() && child1.speed() <= 110));
+    REQUIRE(((85 <= child1.speed()) && (child1.speed() <= 115)));
+
+    Organism child2 = parent2.Replicate();
+    REQUIRE(((45 <= child2.speed()) && (child2.speed() <= 55)));
+    REQUIRE(((170 <= child2.size()) && (child2.size() <= 230)));
   }
 }
