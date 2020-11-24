@@ -17,8 +17,14 @@ Organism::Organism(double speed, double size)
   velocity_ = glm::vec2(0,speed_);
 }
 
-void Organism::Eat(const Food& food) {
-  calories_gained_ += food.calories_;
+bool Organism::Eat(const Food& food) {
+  if (!WillReplicate()) {
+    if (glm::length(food.position_ - position_) <= size_) {
+      calories_gained_ += food.calories_;
+      return true;
+    }
+  }
+  return false;
 }
 
 void Organism::Move() {
@@ -42,15 +48,14 @@ Organism Organism::Replicate() const {
   return Organism(new_speed, new_size);
 }
 
-void Organism::ResetForDay(glm::vec2 pos, glm::vec2 vel) {
+void Organism::ResetForDay(glm::vec2 pos) {
   position_ = pos;
-  velocity_ = vel;
   calories_gained_ = 0;
   current_energy_expended_ = 0;
 }
 
 double Organism::ExpendEnergy() {
-  double energy_expended = speed_*speed_ + size_*size_*size_;
+  double energy_expended = speed_ * speed_ + 0.001 * size_ * size_ * size_;
   current_energy_expended_ += energy_expended;
   return energy_expended;
 }

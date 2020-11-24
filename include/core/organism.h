@@ -19,10 +19,12 @@ class Organism {
   Organism(double speed, double size);
 
   /**
-   * Function called when an organism eats food
+   * Function called when an organism touches food. The organism will only
+   * consume the food if it has not yet received enough nutrition to replicate
    * @param food- The Food object that the organism has eaten
+   * @return true if the organism ate the food object, else false
    */
-  void Eat(const Food& food);
+  bool Eat(const Food& food);
 
   /**
    * Function called to update the velocity and position of the organism
@@ -35,9 +37,8 @@ class Organism {
    * Function to reset the organism after each day of the simulation. This
    * includes resetting the organism's position, velocity, and calories gained
    * @param pos- The new position of the organism
-   * @param vel- The new velocity of the organism
    */
-  void ResetForDay(glm::vec2 pos, glm::vec2 vel);
+  void ResetForDay(glm::vec2 pos);
 
   /**
    * Function to check if the organism will survive for the day based on its
@@ -115,7 +116,7 @@ class Organism {
    * Getter method for speed
    * @return speed_
    */
-  double speed() {
+  double speed() const {
     return speed_;
   }
 
@@ -123,7 +124,7 @@ class Organism {
    * Getter method for size
    * @return size_
    */
-  double size() {
+  double size() const {
     return size_;
   }
  private:
