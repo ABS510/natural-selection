@@ -27,11 +27,15 @@ bool Organism::Eat(const Food& food) {
   return false;
 }
 
-void Organism::Move() {
+void Organism::Move(int length, int height) {
   // Generate a random angle between 0 and 2pi
   double rand_angle = (2 * M_PI * ( (double) rand() / (double) RAND_MAX));
   velocity_ = glm::vec2(speed_ * cos(rand_angle), speed_ * sin(rand_angle));
   position_ += velocity_;
+  if (position_.x < size_ || position_.x > length - size_
+      || position_.y < size_ || position_.y > height - size_) {
+    position_ -= 2.0f * velocity_;
+  }
 }
 
 bool Organism::WillSurvive() const {
@@ -60,9 +64,9 @@ double Organism::ExpendEnergy() {
   return energy_expended;
 }
 
-void Organism::Update() {
+void Organism::Update(int length, int height) {
   if (current_energy_expended_ < max_energy_) {
-    Move();
+    Move(length, height);
     ExpendEnergy();
   }
 }

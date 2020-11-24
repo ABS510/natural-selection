@@ -30,8 +30,10 @@ class Organism {
    * Function called to update the velocity and position of the organism
    * throughout the simulation. The organism will randomly move through the
    * environment.
+   * @param length The length of the environment that the organism belongs to
+   * @param height The height of the environment that the organism belongs to
    */
-  void Move();
+  void Move(int length, int height);
 
   /**
    * Function to reset the organism after each day of the simulation. This
@@ -69,8 +71,10 @@ class Organism {
 
   /**
    * Function to update the state of the organism during the simulation
+   * @param length The length of the environment that the organism belongs to
+   * @param height The height of the environment that the organism belongs to
    */
-  void Update();
+  void Update(int length, int height);
 
   /**
    * Function to set the gene for speed of all the organisms
