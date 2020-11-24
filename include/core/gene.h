@@ -3,7 +3,8 @@
 namespace naturalselection {
 
 /**
- * Class to represent the gene characteristics of a species
+ * Class to represent the gene characteristics of a species.
+ * Probability distribution used is from a bell curve
  */
 class Gene {
  public:
