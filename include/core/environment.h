@@ -91,6 +91,22 @@ class Environment {
     return height_;
   }
 
+  /**
+   * Getter method for list of Organisms
+   * @return organisms_
+   */
+  const std::vector<Organism>& organisms() const {
+    return organisms_;
+  }
+
+  /**
+   * Getter method for list of food objects
+   * @return food_
+   */
+  const std::vector<Food>& food() const {
+    return food_;
+  }
+
  private:
   const int length_;
   const int height_;

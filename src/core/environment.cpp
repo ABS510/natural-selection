@@ -114,5 +114,6 @@ void Environment::Update() {
       }
     }
   }
+  time_elapsed_++;
 }
 }// namespace naturalselection
