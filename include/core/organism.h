@@ -131,6 +131,14 @@ class Organism {
   double size() const {
     return size_;
   }
+
+  /**
+   * Getter method for size
+   * @return size_
+   */
+  glm::vec2 position() const {
+    return position_;
+  }
  private:
   // Genetic traits which are constant for a given organism
   const double speed_;
