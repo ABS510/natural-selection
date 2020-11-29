@@ -33,7 +33,7 @@ class Organism {
    * @param length The length of the environment that the organism belongs to
    * @param height The height of the environment that the organism belongs to
    */
-  void Move(int length, int height);
+  void Move(int length, int height, const std::vector<Food>& food);
 
   /**
    * Function to reset the organism after each day of the simulation. This
@@ -74,7 +74,7 @@ class Organism {
    * @param length The length of the environment that the organism belongs to
    * @param height The height of the environment that the organism belongs to
    */
-  void Update(int length, int height);
+  void Update(int length, int height, const std::vector<Food>& food);
 
   /**
    * Function to set the gene for speed of all the organisms
@@ -141,8 +141,8 @@ class Organism {
   }
  private:
   // Genetic traits which are constant for a given organism
-  const double speed_;
-  const double size_;
+  double speed_;
+  double size_;
 
   // Variables which change throughout the simulation
   double calories_gained_;
