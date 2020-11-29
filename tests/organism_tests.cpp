@@ -3,10 +3,20 @@
 
 using namespace naturalselection;
 
+TEST_CASE("Reset for day") {
+  Organism::SetSurvivabilityThreshold(100);
+  Organism organism(10, 10);
+  organism.Eat(Food(glm::vec2(10,10), "red", 50));
+  organism.ResetForDay(glm::vec2(4,7));
+  REQUIRE(organism.position() == glm::vec2(4,7));
+  REQUIRE(organism.WillSurvive() == false);
+  REQUIRE(organism.WillReplicate() == false);
+}
+
 TEST_CASE("Will Survive") {
   Organism::SetSurvivabilityThreshold(100);
   Organism organism(10, 10);
-  organism.ResetForDay(glm::vec2(0,0), glm::vec2(0,10));
+  organism.ResetForDay(glm::vec2(10,10));
 
   organism.Eat(Food(glm::vec2(10,10), "red", 50));
   REQUIRE_FALSE(organism.WillSurvive());
@@ -17,7 +27,7 @@ TEST_CASE("Will Survive") {
 TEST_CASE("Will Replicate") {
   Organism::SetSurvivabilityThreshold(200);
   Organism organism(10, 10);
-  organism.ResetForDay(glm::vec2(0,0), glm::vec2(0,10));
+  organism.ResetForDay(glm::vec2(10,10));
 
   organism.Eat(Food(glm::vec2(10,10), "red", 150));
   REQUIRE_FALSE(organism.WillReplicate());
@@ -39,5 +49,56 @@ TEST_CASE("Replicate") {
     Organism child2 = parent2.Replicate();
     REQUIRE(((45 <= child2.speed()) && (child2.speed() <= 55)));
     REQUIRE(((170 <= child2.size()) && (child2.size() <= 230)));
+  }
+}
+
+TEST_CASE("Expend Energy") {
+  SECTION("0 speed") {
+    Organism organism (0, 10);
+    REQUIRE(organism.ExpendEnergy() == 10);
+  }
+
+  SECTION("0 size") {
+    Organism organism (10, 0);
+    REQUIRE(organism.ExpendEnergy() == 100);
+  }
+
+  SECTION("Random size and speed") {
+    Organism organism (7, 12);
+    REQUIRE(organism.ExpendEnergy() == 66.28);
+  }
+}
+
+TEST_CASE("Move") {
+  SECTION("Environment has no food") {
+    Organism organism (7, 12);
+    organism.ResetForDay(glm::vec2(0, 0));
+    organism.Move(100, 100, std::vector<Food>());
+    REQUIRE(organism.position() == glm::vec2(0, 0));
+  }
+
+  SECTION("Environment has 1 food object but is out of vision of organism") {
+    Organism organism (10, 2);
+    organism.ResetForDay(glm::vec2(50, 0));
+    std::vector<Food> food_vector(1, Food(glm::vec2(90, 90), 50));
+    organism.Move(100, 100, food_vector);
+    REQUIRE(organism.position() == glm::vec2(50, 10));
+  }
+
+  SECTION("Environment has 1 food object in vision of organism") {
+    Organism organism (10, 20);
+    organism.ResetForDay(glm::vec2(90, 0));
+    std::vector<Food> food_vector(1, Food(glm::vec2(90, 90), 50));
+    organism.Move(100, 100, food_vector);
+    REQUIRE(organism.position() == glm::vec2(90, 10));
+  }
+
+  SECTION("Environment has multiple food objects in vision of organism") {
+    Organism organism (10, 20);
+    organism.ResetForDay(glm::vec2(40, 0));
+    std::vector<Food> food_vector(1, Food(glm::vec2(90, 90), 50));
+    food_vector.push_back(Food(glm::vec2(40, 20), 50));
+    organism.Move(100, 100, food_vector);
+    REQUIRE(organism.position() == glm::vec2(40, 10));
   }
 }
