@@ -28,32 +28,16 @@ bool Organism::Eat(const Food& food) {
 }
 
 void Organism::Move(int length, int height, const std::vector<Food>& food) {
-  /*// Generate a random angle between 0 and pi
-  float rand_angle = sqrt(-log(((double) rand() / (double) RAND_MAX) + 0.0001));
-  if (rand_angle > M_PI) {
-    rand_angle = M_PI;
-  }
-  if (rand() % 2 == 1) {
-    rand_angle = -rand_angle;
-  }
-  glm::vec2 prob_direction = glm::vec2(length / 2, height / 2) - position_;
-  velocity_ = (float)speed_ * glm::rotate(prob_direction, rand_angle) / glm::length(prob_direction);
-  position_ += velocity_;
-  if (position_.x < size_ || position_.x > length - size_
-      || position_.y < size_ || position_.y > height - size_) {
-    position_ -= 2.0f * velocity_;
-  }*/
   if (!WillReplicate()) {
     glm::vec2 target(length / 2, height / 2);
     double min_dist = length * length + height * height;
     for (const Food& food_ : food) {
       if (glm::length(food_.position_ - position_) < min_dist &&
-          glm::length(food_.position_ - position_) < 10 * size_) {
+          glm::length(food_.position_ - position_) < 5 * size_) {
         target = food_.position_;
         min_dist = glm::length(food_.position_ - position_);
       }
     }
-
     velocity_ =
         (float)speed_ * (target - position_) / glm::length(target - position_);
     if (food.size() == 0) {
@@ -84,7 +68,7 @@ void Organism::ResetForDay(glm::vec2 pos) {
 }
 
 double Organism::ExpendEnergy() {
-  double energy_expended = speed_ * speed_ + 0.001 * size_ * size_ * size_;
+  double energy_expended = speed_ * speed_ + 0.01 * size_ * size_ * size_;
   current_energy_expended_ += energy_expended;
   return energy_expended;
 }
