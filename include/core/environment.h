@@ -151,5 +151,11 @@ class Environment {
    * Function to reset all organisms at the end of each day of the simulation
    */
   void ResetOrganisms();
+
+  /**
+   * Function to randomly kill some organisms at the end of each day, with the
+   * probability varying with the size of the organism
+   */
+   void RemoveRandomOrganisms();
 };
 } // namespace naturalselection

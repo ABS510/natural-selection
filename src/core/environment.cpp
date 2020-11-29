@@ -26,6 +26,8 @@ Environment::Environment(int length, int height, double total_calories,
   num_food_ = num_food;
   AddFood();
   AddOrganisms(num_starting_organisms, starting_speed, starting_size);
+  ResetOrganisms();
+  time_elapsed_ = 0;
 }
 
 void Environment::AddFood() {
@@ -47,6 +49,7 @@ void Environment::RemoveDeadOrganisms() {
   for (size_t i = 0; i < organisms_.size(); i++) {
     if (!organisms_[i].WillSurvive()) {
       organisms_.erase(organisms_.begin() + i);
+      i--;
     }
   }
 }
@@ -55,6 +58,16 @@ void Environment::AddNewOrganisms() {
   for (const Organism& organism : organisms_) {
     if (organism.WillReplicate()) {
       organisms_.push_back(organism.Replicate());
+    }
+  }
+}
+
+void Environment::RemoveRandomOrganisms() {
+  float base_probability = (double) organisms_.size() / (organisms_.size() + 1);
+  for (size_t i = 0; i < organisms_.size(); i++) {
+    if (((double)rand() / (double)RAND_MAX) <= (base_probability / organisms_[i].size())) {
+      organisms_.erase(organisms_.begin() + i);
+      i--;
     }
   }
 }
@@ -68,23 +81,23 @@ void Environment::ResetOrganisms() {
     switch (num_wall) {
       case 0:
         pos.x = organism.size();
-        pos.y = organism.size() + (height_ - (2 * organism.size())) *
-                                      ((double)rand() / (double)RAND_MAX);
+        pos.y = organism.size() + ((height_ - (2 * organism.size())) *
+                                      ((double)rand() / (double)RAND_MAX));
         break;
       case 1:
         pos.x = length_ - organism.size();
-        pos.y = organism.size() + (height_ - (2 * organism.size())) *
-                                      ((double)rand() / (double)RAND_MAX);
+        pos.y = organism.size() + ((height_ - (2 * organism.size())) *
+                                      ((double)rand() / (double)RAND_MAX));
         break;
       case 2:
-        pos.y = height_ - organism.size();
-        pos.x = organism.size() + (length_ - (2 * organism.size())) *
-                                  ((double)rand() / (double)RAND_MAX);
+        pos.y = organism.size();
+        pos.x = organism.size() + ((length_ - (2 * organism.size())) *
+                                  ((double)rand() / (double)RAND_MAX));
         break;
       case 3:
-        pos.y = organism.size();
-        pos.x = organism.size() + (length_ - (2 * organism.size())) *
-                                  ((double)rand() / (double)RAND_MAX);
+        pos.y = height_ - organism.size();
+        pos.x = organism.size() + ((length_ - (2 * organism.size())) *
+                                  ((double)rand() / (double)RAND_MAX));
         break;
     }
     organism.ResetForDay(pos);
@@ -96,6 +109,7 @@ void Environment::Reset() {
   AddFood();
   RemoveDeadOrganisms();
   AddNewOrganisms();
+  RemoveRandomOrganisms();
   ResetOrganisms();
   time_elapsed_ = 0;
 }
@@ -107,7 +121,7 @@ void Environment::Update() {
   }
 
   for (Organism& organism : organisms_) {
-    organism.Update(length_, height_);
+    organism.Update(length_, height_, food_);
     for (size_t i = 0; i < food_.size(); i++) {
       if (organism.Eat(food_[i])) {
         food_.erase(food_.begin() + i);
