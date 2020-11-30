@@ -68,7 +68,7 @@ void Organism::ResetForDay(glm::vec2 pos) {
 }
 
 double Organism::ExpendEnergy() {
-  double energy_expended = speed_ * speed_ + 0.01 * size_ * size_ * size_;
+  double energy_expended = speed_ * speed_ + 0.006 * size_ * size_ * size_;
   current_energy_expended_ += energy_expended;
   return energy_expended;
 }
