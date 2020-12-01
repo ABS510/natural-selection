@@ -19,6 +19,8 @@ class EnvironmentDisplay {
 
   void Draw();
 
+  void Update();
+
  private:
   Environment environment_;
   glm::vec2 top_left_corner_;

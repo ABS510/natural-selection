@@ -8,6 +8,14 @@ EnvironmentDisplay::EnvironmentDisplay(Environment environment,
 }
 
 void EnvironmentDisplay::Draw() {
+  ci::gl::color(1, 1, 1);
+  // Display current population and number of days elapsed
+  ci::gl::drawString(
+      "Population:" + std::to_string(environment_.organisms().size()) +
+          "\t Day:" + std::to_string(environment_.days()),
+      top_left_corner_ - glm::vec2(0,18), ci::Color8u("white") ,
+      ci::Font("Arial",18));
+  DrawEnvironment();
   for (const Organism& organism : environment_.organisms()) {
     DrawOrganism(organism);
   }
@@ -16,13 +24,22 @@ void EnvironmentDisplay::Draw() {
   }
 }
 
+void EnvironmentDisplay::Update() {
+  environment_.Update();
+}
+
 void EnvironmentDisplay::DrawFood(const Food &food) {
   ci::gl::color(food.color_);
   ci::gl::drawSolidCircle(food.position_ + top_left_corner_, 4);
 }
 
 void EnvironmentDisplay::DrawOrganism(const Organism& organism) {
-  ci::gl::color(255, 255 - 5 * organism.speed(), 255 - 5 * organism.speed());
+  // Display the organism as more red depending on its speed
+  float red_shade = ((400.0 - (50 * organism.speed()))) / 255;
+  if (red_shade <= 0) {
+    red_shade = 0;
+  }
+  ci::gl::color(1, red_shade, red_shade);
   ci::gl::drawSolidCircle(
       organism.position() + top_left_corner_, organism.size());
 }
