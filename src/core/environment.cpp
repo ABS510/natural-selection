@@ -65,7 +65,8 @@ void Environment::AddNewOrganisms() {
 void Environment::RemoveRandomOrganisms() {
   float base_probability = (double) organisms_.size() / (organisms_.size() + 1);
   for (size_t i = 0; i < organisms_.size(); i++) {
-    if (((double)rand() / (double)RAND_MAX) <= (base_probability / organisms_[i].size())) {
+    if (((double)rand() / (double)RAND_MAX) <=
+        (base_probability / organisms_[i].size())) {
       organisms_.erase(organisms_.begin() + i);
       i--;
     }
@@ -112,6 +113,7 @@ void Environment::Reset() {
   RemoveRandomOrganisms();
   ResetOrganisms();
   time_elapsed_ = 0;
+  days_++;
 }
 
 void Environment::Update() {

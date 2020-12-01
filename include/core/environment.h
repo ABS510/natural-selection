@@ -107,6 +107,13 @@ class Environment {
     return food_;
   }
 
+  /**
+   * Getter method for the number of days elapsed
+   * @return days_
+   */
+  const int days() const {
+    return days_;
+  }
  private:
   const int length_;
   const int height_;
@@ -122,6 +129,8 @@ class Environment {
   // The number of frames that have elapsed since the day began. Gets reset to
   // zero at the end of each day
   int time_elapsed_;
+  // The number of days passed
+  int days_ = 1;
   // Helper Methods:
 
   /**
