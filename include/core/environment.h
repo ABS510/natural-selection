@@ -19,6 +19,14 @@ class Environment {
   Environment(int length, int height);
 
   /**
+   * Constructor to initialize environment with length and height
+   * @param length Length of the (rectangular) environment
+   * @param height height of the environment
+   * @param organisms A vector of starting organisms
+   */
+  Environment(int length, int height, std::vector<Organism>& organisms);
+
+  /**
    * Constructor to initialize environment with length and height, as well
    * as the total number of calories of the environment and the number of
    * organisms to start with.
@@ -74,6 +82,26 @@ class Environment {
    * Function to update the state of the environment. Called every frame.
    */
   void Update();
+
+  /**
+   * Function to reset all organisms at the end of each day of the simulation
+   */
+  void ResetOrganisms();
+
+  /**
+   * Function to remove organisms that have not survived at the end of each day
+   */
+  void RemoveDeadOrganisms();
+
+  /**
+   * Function to add new organisms to the environment at the end of each day
+   */
+  void AddNewOrganisms();
+
+  /**
+   * Function to fill the Food vector of the environment
+   */
+  void AddFood();
 
   /**
    * Getter method for length
@@ -134,32 +162,12 @@ class Environment {
   // Helper Methods:
 
   /**
-   * Function to remove organisms that have not survived at the end of each day
-   */
-  void RemoveDeadOrganisms();
-
-  /**
-   * Function to add new organisms to the environment at the end of each day
-   */
-  void AddNewOrganisms();
-
-  /**
-   * Helper function to fill the Food vector of the environment
-   */
-  void AddFood();
-
-  /**
    * Function to add initial organisms to the environment
    * @param num_organisms The number of organisms to be added
    * @param size The size of the organisms
    * @param speed The speed of the organisms
    */
   void AddOrganisms(int num_organisms, double speed, double size);
-
-  /**
-   * Function to reset all organisms at the end of each day of the simulation
-   */
-  void ResetOrganisms();
 
   /**
    * Function to randomly kill some organisms at the end of each day, with the

@@ -6,6 +6,16 @@ Environment::Environment(int length, int height)
     : Environment(length, height, 1000, 30,
                   20, 240) {}
 
+Environment::Environment(int length, int height,
+                         std::vector<Organism>& organisms)
+    : length_(length) , height_(height), length_of_day_(240) {
+  total_calories_ = 1000;
+  num_food_ = 30;
+  AddFood();
+  organisms_ = organisms;
+  time_elapsed_ = 0;
+}
+
 Environment::Environment(int length, int height, double total_calories,
                          int num_food, int num_starting_organisms)
     : Environment(length, height, total_calories, num_food,
@@ -63,7 +73,7 @@ void Environment::AddNewOrganisms() {
 }
 
 void Environment::RemoveRandomOrganisms() {
-  float base_probability = (double) organisms_.size() / (organisms_.size() + 1);
+  double base_probability = (double) organisms_.size() / (organisms_.size() + 1);
   for (size_t i = 0; i < organisms_.size(); i++) {
     if (((double)rand() / (double)RAND_MAX) <=
         (base_probability / organisms_[i].size())) {
