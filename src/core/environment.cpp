@@ -1,4 +1,6 @@
 #include "core/environment.h"
+#include <fstream>
+#include <iostream>
 
 namespace naturalselection {
 
@@ -37,7 +39,105 @@ Environment::Environment(int length, int height, double total_calories,
   AddFood();
   AddOrganisms(num_starting_organisms, starting_speed, starting_size);
   ResetOrganisms();
+  population_.push_back(num_starting_organisms);
   time_elapsed_ = 0;
+}
+
+Environment::Environment(std::string file_path) {
+  std::ifstream is(file_path);
+  if (!is.is_open()) {
+    throw std::invalid_argument("The file does not exists!");
+  }
+  std::string str;
+  while (!is.eof()) {
+    std::getline(is, str);
+    try {
+      length_ = stoi(str);
+    } catch (std::invalid_argument& e) {
+      continue;
+    }
+    break;
+  }
+  try {
+    is >> height_;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    is >> length_of_day_;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    int num_starting_organisms;
+    is >> num_starting_organisms;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    double starting_speed;
+    is >> starting_speed;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    double starting_size;
+    is >> starting_size;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    speeds_ = std::vector<double>(num_starting_organisms, starting_speed);
+    sizes_ = std::vector<double>(num_starting_organisms, starting_size);
+    double max_energy;
+    is >> max_energy;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    Organism::SetMaximumEnergy(max_energy);
+    double surv_threshold;
+    is >> surv_threshold;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    Organism::SetSurvivabilityThreshold(surv_threshold);
+    double replicate_threshold;
+    is >> replicate_threshold;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    Organism::SetReplicationThreshold(replicate_threshold);
+    double speed_gene_trans;
+    is >> speed_gene_trans;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    double speed_gene_change;
+    is >> speed_gene_change;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    Organism::SetSpeedGene(speed_gene_trans, speed_gene_change);
+    double size_gene_trans;
+    is >> size_gene_trans;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    double size_gene_change;
+    is >> size_gene_change;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    Organism::SetSizeGene(size_gene_trans, size_gene_change);
+    is >> num_food_;
+    if (is.eof()) {
+      throw std::invalid_argument("File is of wrong format");
+    }
+    is >> total_calories_;
+    is.close();
+    AddFood();
+    AddOrganisms(num_starting_organisms, starting_speed, starting_size);
+    ResetOrganisms();
+    population_.push_back(num_starting_organisms);
+    time_elapsed_ = 0;
+  } catch (std::exception& e) {
+    throw e;
+  }
 }
 
 void Environment::AddFood() {
@@ -50,6 +150,8 @@ void Environment::AddFood() {
 }
 
 void Environment::AddOrganisms(int num_organisms, double speed, double size) {
+  speeds_ = std::vector<double>(num_organisms, speed);
+  sizes_ = std::vector<double>(num_organisms, size);
   for (size_t i = 0; i < num_organisms; i++) {
     organisms_.push_back(Organism(speed, size));
   }
@@ -59,6 +161,8 @@ void Environment::RemoveDeadOrganisms() {
   for (size_t i = 0; i < organisms_.size(); i++) {
     if (!organisms_[i].WillSurvive()) {
       organisms_.erase(organisms_.begin() + i);
+      speeds_.erase(speeds_.begin() + i);
+      sizes_.erase(sizes_.begin() + i);
       i--;
     }
   }
@@ -67,7 +171,10 @@ void Environment::RemoveDeadOrganisms() {
 void Environment::AddNewOrganisms() {
   for (const Organism& organism : organisms_) {
     if (organism.WillReplicate()) {
-      organisms_.push_back(organism.Replicate());
+      Organism offspring = organism.Replicate();
+      organisms_.push_back(offspring);
+      speeds_.push_back(offspring.speed());
+      sizes_.push_back(offspring.size());
     }
   }
 }
@@ -78,6 +185,8 @@ void Environment::RemoveRandomOrganisms() {
     if (((double)rand() / (double)RAND_MAX) <=
         (base_probability / organisms_[i].size())) {
       organisms_.erase(organisms_.begin() + i);
+      speeds_.erase(speeds_.begin() + i);
+      sizes_.erase(sizes_.begin() + i);
       i--;
     }
   }
@@ -122,6 +231,7 @@ void Environment::Reset() {
   AddNewOrganisms();
   RemoveRandomOrganisms();
   ResetOrganisms();
+  population_.push_back(organisms_.size());
   time_elapsed_ = 0;
   days_++;
 }

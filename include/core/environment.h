@@ -74,6 +74,12 @@ class Environment {
               double starting_speed, double starting_size);
 
   /**
+   * Constructor to initialize environment from a text file
+   * @param file_path The path to the text file
+   */
+  Environment(std::string file_path);
+
+  /**
    * Function to reset the environment after the end of each day
    */
   void Reset();
@@ -107,7 +113,7 @@ class Environment {
    * Getter method for length
    * @return length_
    */
-  int length() {
+  int length() const {
     return length_;
   }
 
@@ -115,7 +121,7 @@ class Environment {
    * Getter method for height
    * @return height_
    */
-  int height() {
+  int height() const {
     return height_;
   }
 
@@ -142,10 +148,35 @@ class Environment {
   const int days() const {
     return days_;
   }
+
+  /**
+   * Getter method for the population data
+   * @return population_
+   */
+  const std::vector<int>& population() const {
+    return population_;
+  }
+
+  /**
+   * Getter method for the sizes vector
+   * @return sizes_
+   */
+  const std::vector<double>& sizes() const {
+    return sizes_;
+  }
+
+  /**
+   * Getter method for the speeds vector
+   * @return speeds_
+   */
+  const std::vector<double>& speeds() const {
+    return speeds_;
+  }
+
  private:
-  const int length_;
-  const int height_;
-  const int length_of_day_;
+  int length_;
+  int height_;
+  int length_of_day_;
 
   int num_food_;
   double total_calories_;
@@ -159,8 +190,14 @@ class Environment {
   int time_elapsed_;
   // The number of days passed
   int days_ = 1;
-  // Helper Methods:
+  // A vector storing the population of the environment as a function of days
+  std::vector<int> population_;
+  // A vector storing the speeds of all organisms
+  std::vector<double> speeds_;
+  // A vector storing the sizes of all organisms
+  std::vector<double> sizes_;
 
+  // Helper Methods:
   /**
    * Function to add initial organisms to the environment
    * @param num_organisms The number of organisms to be added
