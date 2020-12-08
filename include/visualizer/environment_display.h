@@ -17,9 +17,55 @@ class EnvironmentDisplay {
    */
   EnvironmentDisplay(Environment environment, glm::vec2 top_left_corner);
 
+  /**
+   * Function to draw the environment and all organisms within it
+   */
   void Draw();
 
+  /**
+   * Function to update the state of the environment
+   */
   void Update();
+
+  /**
+   * Getter method for the environment
+   * @return environment_
+   */
+  const Environment& environment() const {
+    return environment_;
+  }
+
+  /**
+   * Getter method for the population data of environment_
+   * @return population_ of environment
+   */
+  const std::vector<int>& population() const {
+    return environment_.population();
+  }
+
+  /**
+   * Getter function for the number of organisms in the environment
+   * @return size of the organisms vector
+   */
+  int num_organisms() const {
+    return environment_.organisms().size();
+  }
+
+  /**
+   * Function to obtain the speeds vector of the environment
+   * @return environment_.speeds()
+   */
+  const std::vector<double>& speeds() const {
+    return environment_.speeds();
+  }
+
+  /**
+   * Function to obtain the sizes vector of the environment
+   * @return environment_.sizes()
+   */
+  const std::vector<double>& sizes() const {
+    return environment_.sizes();
+  }
 
  private:
   Environment environment_;

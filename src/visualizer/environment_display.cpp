@@ -13,9 +13,11 @@ void EnvironmentDisplay::Draw() {
   ci::gl::drawString(
       "Population:" + std::to_string(environment_.organisms().size()) +
           "\t Day:" + std::to_string(environment_.days()),
-      top_left_corner_ - glm::vec2(0,18), ci::Color8u("white") ,
+      top_left_corner_ - glm::vec2(0,18), ci::Color8u("white"),
       ci::Font("Arial",18));
+
   DrawEnvironment();
+
   for (const Organism& organism : environment_.organisms()) {
     DrawOrganism(organism);
   }
@@ -30,12 +32,16 @@ void EnvironmentDisplay::Update() {
 
 void EnvironmentDisplay::DrawFood(const Food &food) {
   ci::gl::color(food.color_);
-  ci::gl::drawSolidCircle(food.position_ + top_left_corner_, 4);
+  const int food_size = 4;
+  ci::Rectf food_square(
+      top_left_corner_ + food.position_ - glm::vec2(food_size,food_size),
+      top_left_corner_ + food.position_ + glm::vec2(food_size,food_size));
+  ci::gl::drawSolidRect(food_square);
 }
 
 void EnvironmentDisplay::DrawOrganism(const Organism& organism) {
   // Display the organism as more red depending on its speed
-  float red_shade = ((400.0 - (50 * organism.speed()))) / 255;
+  float red_shade = ((255.0 - (25 * organism.speed()))) / 255;
   if (red_shade <= 0) {
     red_shade = 0;
   }
@@ -54,4 +60,4 @@ void EnvironmentDisplay::DrawEnvironment() {
   ci::gl::color(255, 255, 255);
   ci::gl::drawStrokedRect(pixel_bounding_box);
 }
-}
+} // namespace naturalselection
