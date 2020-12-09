@@ -126,6 +126,14 @@ class Environment {
   }
 
   /**
+   * Function to check if the simulation is at the end of a day
+   * @return True if the simulation is at the end of a day, else false
+   */
+  bool IsEndOfDay() const {
+    return (time_elapsed_ >= length_of_day_);
+  }
+
+  /**
    * Getter method for list of Organisms
    * @return organisms_
    */

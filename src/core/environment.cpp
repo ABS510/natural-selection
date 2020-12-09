@@ -15,6 +15,7 @@ Environment::Environment(int length, int height,
   num_food_ = 30;
   AddFood();
   organisms_ = organisms;
+  ResetOrganisms();
   time_elapsed_ = 0;
 }
 
@@ -237,7 +238,7 @@ void Environment::Reset() {
 }
 
 void Environment::Update() {
-  if (time_elapsed_ >= length_of_day_) {
+  if (IsEndOfDay()) {
     Reset();
     return;
   }
