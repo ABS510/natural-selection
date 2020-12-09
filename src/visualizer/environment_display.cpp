@@ -41,7 +41,7 @@ void EnvironmentDisplay::DrawFood(const Food &food) {
 
 void EnvironmentDisplay::DrawOrganism(const Organism& organism) {
   // Display the organism as more red depending on its speed
-  float red_shade = ((255.0 - (25 * organism.speed()))) / 255;
+  float red_shade = ((255.0 - (15 * organism.speed()))) / 255;
   if (red_shade <= 0) {
     red_shade = 0;
   }
@@ -57,7 +57,7 @@ void EnvironmentDisplay::DrawEnvironment() {
 
   ci::gl::color(0, 0, 0);
   ci::gl::drawSolidRect(pixel_bounding_box);
-  ci::gl::color(255, 255, 255);
+  ci::gl::color(1, 1, 1);
   ci::gl::drawStrokedRect(pixel_bounding_box);
 }
 } // namespace naturalselection
