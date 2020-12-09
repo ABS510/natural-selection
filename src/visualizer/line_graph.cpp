@@ -72,12 +72,12 @@ void LineGraph::DrawAxes(ci::Color8u axis_color, size_t num_values, int max_y) {
   if(num_values < x_scale_) {
     num_x_scale_div = num_values;
   }
-  int width = length_ / num_x_scale_div;
+  double width = ((double) length_) / num_x_scale_div;
   for(size_t i = 1; i <= num_x_scale_div; i++) {
     int x_data = (i * num_values) / num_x_scale_div;
     ci::gl::drawStringCentered(std::to_string(x_data), top_left_corner_ +
         vec2(width * (i - 1), height_ + str_pixel_buffer_));
-    if (i == num_x_scale_div) {
+    if (i == num_x_scale_div && num_values < x_scale_) {
       ci::gl::drawStringCentered(std::to_string(x_data + 1), top_left_corner_ +
         vec2(width * (i), height_ + str_pixel_buffer_));
     }
