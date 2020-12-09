@@ -77,9 +77,9 @@ void Histogram::DrawAxes(ci::Color8u axis_color, size_t x_scale_precision) {
   ci::gl::translate(-y_axis_text_pos);
 
   // Displaying the scale on the y-axis
-  for (size_t i = 0; i <= 4; i++) {
-    ci::gl::drawStringCentered(std::to_string(i * 25),top_left_corner_ +
-                  vec2(-str_pixel_buffer_, (4 - i) * height_ / 4));
+  for (size_t i = 0; i <= 10; i++) {
+    ci::gl::drawStringCentered(std::to_string(i * 10),top_left_corner_ +
+                  vec2(-str_pixel_buffer_, (10 - i) * height_ / 10));
   }
 
   // Displaying the scale on the x-axis
