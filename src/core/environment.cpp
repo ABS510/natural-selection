@@ -4,11 +4,11 @@
 
 namespace naturalselection {
 
-Environment::Environment(int length, int height)
+Environment::Environment(size_t length, size_t height)
     : Environment(length, height, 1000, 30,
                   20, 240) {}
 
-Environment::Environment(int length, int height,
+Environment::Environment(size_t length, size_t height,
                          std::vector<Organism>& organisms)
     : length_(length) , height_(height), length_of_day_(240) {
   total_calories_ = 1000;
@@ -22,20 +22,20 @@ Environment::Environment(int length, int height,
   time_elapsed_ = 0;
 }
 
-Environment::Environment(int length, int height, double total_calories,
-                         int num_food, int num_starting_organisms)
+Environment::Environment(size_t length, size_t height, double total_calories,
+                         size_t num_food, size_t num_starting_organisms)
     : Environment(length, height, total_calories, num_food,
                   num_starting_organisms, 240) {}
 
-Environment::Environment(int length, int height, double total_calories,
-                         int num_food, int num_starting_organisms,
-                         int length_of_day)
+Environment::Environment(size_t length, size_t height, double total_calories,
+                         size_t num_food, size_t num_starting_organisms,
+                         size_t length_of_day)
     : Environment(length, height, total_calories, num_food,
                   num_starting_organisms, 240, 4, 10) {}
 
-Environment::Environment(int length, int height, double total_calories,
-                         int num_food, int num_starting_organisms,
-                         int length_of_day, double starting_speed,
+Environment::Environment(size_t length, size_t height, double total_calories,
+                         size_t num_food, size_t num_starting_organisms,
+                         size_t length_of_day, double starting_speed,
                          double starting_size)
     : length_(length) , height_(height), length_of_day_(length_of_day) {
   total_calories_ = total_calories;
@@ -71,7 +71,7 @@ Environment::Environment(std::string file_path) {
     if (is.eof()) {
       throw std::invalid_argument("File is of wrong format");
     }
-    int num_starting_organisms;
+    size_t num_starting_organisms;
     is >> num_starting_organisms;
     if (is.eof()) {
       throw std::invalid_argument("File is of wrong format");
@@ -153,7 +153,8 @@ void Environment::AddFood() {
   }
 }
 
-void Environment::AddOrganisms(int num_organisms, double speed, double size) {
+void Environment::AddOrganisms(size_t num_organisms, double speed,
+                               double size) {
   speeds_ = std::vector<double>(num_organisms, speed);
   sizes_ = std::vector<double>(num_organisms, size);
   for (size_t i = 0; i < num_organisms; i++) {

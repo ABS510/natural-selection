@@ -16,7 +16,7 @@ class Environment {
    * @param length Length of the (rectangular) environment
    * @param height height of the environment
    */
-  Environment(int length, int height);
+  Environment(size_t length, size_t height);
 
   /**
    * Constructor to initialize environment with length and height
@@ -24,7 +24,7 @@ class Environment {
    * @param height height of the environment
    * @param organisms A vector of starting organisms
    */
-  Environment(int length, int height, std::vector<Organism>& organisms);
+  Environment(size_t length, size_t height, std::vector<Organism>& organisms);
 
   /**
    * Constructor to initialize environment with length and height, as well
@@ -37,8 +37,8 @@ class Environment {
    * @param total_calories The number of calories (in food) in the environment
    * @param num_food The number of food objects in the environment
    */
-  Environment(int length, int height, double total_calories, int num_food,
-              int num_starting_organisms);
+  Environment(size_t length, size_t height, double total_calories,
+              size_t num_food, size_t num_starting_organisms);
 
   /**
    * Constructor to initialize environment with length and height, as well
@@ -52,8 +52,9 @@ class Environment {
    * @param num_food The number of food objects in the environment
    * @param length_of_day The number of frames for which each day will last for
    */
-  Environment(int length, int height, double total_calories, int num_food,
-              int num_starting_organisms, int length_of_day);
+  Environment(size_t length, size_t height, double total_calories,
+              size_t num_food, size_t num_starting_organisms,
+              size_t length_of_day);
 
   /**
   * Constructor to initialize environment with length and height, as well
@@ -69,9 +70,10 @@ class Environment {
   * @param starting_speed The speed of the first generation of organisms
   * @param starting_size The size of the first generation of organisms
   */
-  Environment(int length, int height, double total_calories, int num_food,
-              int num_starting_organisms, int length_of_day,
-              double starting_speed, double starting_size);
+  Environment(size_t length, size_t height, double total_calories,
+              size_t num_food, size_t num_starting_organisms,
+              size_t length_of_day, double starting_speed,
+              double starting_size);
 
   /**
    * Constructor to initialize environment from a text file
@@ -113,7 +115,7 @@ class Environment {
    * Getter method for length
    * @return length_
    */
-  int length() const {
+  size_t length() const {
     return length_;
   }
 
@@ -121,7 +123,7 @@ class Environment {
    * Getter method for height
    * @return height_
    */
-  int height() const {
+  size_t height() const {
     return height_;
   }
 
@@ -153,7 +155,7 @@ class Environment {
    * Getter method for the number of days elapsed
    * @return days_
    */
-  const int days() const {
+  const size_t days() const {
     return days_;
   }
 
@@ -182,22 +184,22 @@ class Environment {
   }
 
  private:
-  int length_;
-  int height_;
-  int length_of_day_;
+  size_t length_;
+  size_t height_;
+  size_t length_of_day_;
 
-  int num_food_;
+  size_t num_food_;
+  // The total number of calories of all the food in the environment
   double total_calories_;
-
   // Vector of food objects that spawn everyday
   std::vector<Food> food_;
   // Vector of surviving organisms that exist in the environment
   std::vector<Organism> organisms_;
   // The number of frames that have elapsed since the day began. Gets reset to
   // zero at the end of each day
-  int time_elapsed_;
+  size_t time_elapsed_;
   // The number of days passed
-  int days_ = 1;
+  size_t days_ = 1;
   // A vector storing the population of the environment as a function of days
   std::vector<int> population_;
   // A vector storing the speeds of all organisms
@@ -212,7 +214,7 @@ class Environment {
    * @param size The size of the organisms
    * @param speed The speed of the organisms
    */
-  void AddOrganisms(int num_organisms, double speed, double size);
+  void AddOrganisms(size_t num_organisms, double speed, double size);
 
   /**
    * Function to randomly kill some organisms at the end of each day, with the
