@@ -6,17 +6,19 @@ using glm::vec2;
 namespace naturalselection {
 
 LineGraph::LineGraph(glm::vec2 top_left_corner, size_t length, size_t height,
-                     size_t x_scale, std::string x_label, std::string y_label)
-    : LineGraph(top_left_corner, length, height, x_scale, x_label, y_label, 10)
-    {}
+                     size_t x_scale, size_t y_scale, std::string x_label,
+                     std::string y_label)
+    : LineGraph(top_left_corner, length, height, x_scale, y_scale,
+                x_label, y_label, 10) {}
 
 LineGraph::LineGraph(glm::vec2 top_left_corner, size_t length, size_t height,
-                     size_t x_scale, std::string x_label, std::string y_label,
-                     int str_pixel_buffer)
+                     size_t x_scale, size_t y_scale, std::string x_label,
+                     std::string y_label, int str_pixel_buffer)
     : top_left_corner_(top_left_corner), length_(length), height_(height) {
   x_axis_label_ = x_label;
   y_axis_label_ = y_label;
   x_scale_ = x_scale;
+  y_scale_ = y_scale;
   str_pixel_buffer_ = str_pixel_buffer;
 }
 
@@ -59,9 +61,8 @@ void LineGraph::DrawAxes(ci::Color8u axis_color, size_t num_values, int max_y) {
   ci::gl::translate(-y_axis_text_pos);
 
   // Displaying the scale on the y-axis
-  size_t num_y_val = 4;
-  for (size_t i = 0; i <= num_y_val; i++) {
-    int y_val = (i * max_y) / num_y_val;
+  for (size_t i = 0; i <= y_scale_; i++) {
+    int y_val = (i * max_y) / y_scale_;
     int height = (y_val * height_) / max_y;
     ci::gl::drawStringCentered(std::to_string(y_val),top_left_corner_ +
                      vec2(-str_pixel_buffer_, height_ - height));

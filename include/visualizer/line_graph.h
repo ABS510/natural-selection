@@ -16,11 +16,13 @@ class LineGraph {
    * @param length Length of the line graph
    * @param height Height of the line graph
    * @param x_scale The number of x scale values to be displayed on the x-axis
+   * @param y_scale The number of y scale values to be displayed on the y-axis
    * @param x_label X-axis label of the line graph
    * @param y_label Y-axis label of the line graph
    */
   LineGraph(glm::vec2 top_left_corner, size_t length, size_t height,
-            size_t x_scale, std::string x_label, std::string y_label);
+            size_t x_scale, size_t y_scale, std::string x_label,
+            std::string y_label);
 
   /**
    * Constructor to initialize line graph with each instance variable
@@ -28,14 +30,15 @@ class LineGraph {
    * @param length Length of the line graph
    * @param height Height of the line graph
    * @param x_scale The number of x scale values to be displayed on the x-axis
+   * @param y_scale The number of y scale values to be displayed on the y-axis
    * @param x_label X-axis label of the line graph
    * @param y_label Y-axis label of the line graph
    * @param str_pixel_buffer The pixel buffer for displaying the string labels
    * for the x and y axis
    */
   LineGraph(glm::vec2 top_left_corner, size_t length, size_t height,
-            size_t x_scale, std::string x_label, std::string y_label,
-            int str_pixel_buffer);
+            size_t x_scale, size_t y_scale, std::string x_label,
+            std::string y_label, int str_pixel_buffer);
   /**
    * Function to draw the line graph
    * @param data- The data of the line graph to be displayed
@@ -64,8 +67,10 @@ class LineGraph {
   std::string x_axis_label_;
   // Y-axis label
   std::string y_axis_label_;
-  // Number of values to be displayed by the x-axis scale
+  // Number of values to be displayed on the x-axis scale
   size_t x_scale_;
+  // Number of values to be displayed on the y-axis scale
+  size_t y_scale_;
   // Pixel buffer between axis and labels
   int str_pixel_buffer_;
 
