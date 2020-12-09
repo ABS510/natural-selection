@@ -40,3 +40,32 @@ TEST_CASE("Remove Dead Organisms") {
   environment.RemoveDeadOrganisms();
   REQUIRE(environment.organisms().size() == 2);
 }
+
+TEST_CASE("End Of Day") {
+  Environment environment(200, 200);
+  for (size_t i = 0; i < 239; i++) {
+    environment.Update();
+  }
+  REQUIRE_FALSE(environment.IsEndOfDay());
+  environment.Update();
+  REQUIRE(environment.IsEndOfDay());
+}
+
+TEST_CASE("Reading from file") {
+  SECTION("Valid File") {
+    Environment environment("data/setup1");
+    REQUIRE(environment.length() == 600);
+    REQUIRE(environment.height() == 700);
+    REQUIRE(environment.organisms().size() == 4);
+    REQUIRE(environment.food().size() == 30);
+    REQUIRE(environment.food()[0].calories_ == 5000.0 / 30);
+  }
+
+  SECTION("Invalid File Format") {
+    REQUIRE_THROWS_AS(Environment("data/invalid_setup"), std::exception);
+  }
+
+  SECTION("Nonexistent File") {
+    REQUIRE_THROWS_AS(Environment("data/na"), std::invalid_argument);
+  }
+}
