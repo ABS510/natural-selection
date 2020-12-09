@@ -47,7 +47,7 @@ class EnvironmentDisplay {
    * Getter function for the number of organisms in the environment
    * @return size of the organisms vector
    */
-  int num_organisms() const {
+  size_t num_organisms() const {
     return environment_.organisms().size();
   }
 
