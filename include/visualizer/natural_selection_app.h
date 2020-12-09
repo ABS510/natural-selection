@@ -29,7 +29,7 @@ class NaturalSelectionApp : public ci::app::App {
   // Top left corner of the environment
   const glm::vec2 top_left_corner_ = glm::vec2(kMargin_, kMargin_);
   // The length and height of each graph
-  const int graph_size_ = 200;
+  const size_t graph_size_ = 200;
   // The ContainerDisplay object to display the container with particles
   EnvironmentDisplay environment_display_;
   // Top left corner of line graph

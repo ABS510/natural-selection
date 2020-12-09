@@ -6,14 +6,16 @@ NaturalSelectionApp::NaturalSelectionApp() : environment_display_(
   Environment(file_path_),top_left_corner_),
   graph_top_left_corner_(2 * kMargin_ +
              environment_display_.environment().length(), kMargin_),
-  line_graph_(graph_top_left_corner_, graph_size_, graph_size_, 8, "days",
+  line_graph_(graph_top_left_corner_, graph_size_, graph_size_, 8, 4, "days",
                                                          "population"),
-  speed_histogram_(graph_top_left_corner_ + glm::vec2(0, graph_size_ + 30),
+  speed_histogram_(graph_top_left_corner_ +
+                   glm::vec2(0, (graph_size_ + kMargin_)),
                    graph_size_, graph_size_, "speed","frequency %", 15,
-                   environment_display_.num_organisms(),8),
-  size_histogram_(graph_top_left_corner_ + glm::vec2(0, 2 * graph_size_ + 60),
+                   environment_display_.num_organisms(), 8),
+  size_histogram_(graph_top_left_corner_ +
+                  glm::vec2(0, 2 * (graph_size_ + kMargin_)),
                    graph_size_, graph_size_, "size","frequency %", 15,
-                   environment_display_.num_organisms(),8) {
+                   environment_display_.num_organisms(), 8) {
   ci::app::setWindowSize((int) kWindowSizeLength_, (int) kWindowSizeHeight_);
 }
 
