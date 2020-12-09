@@ -15,7 +15,10 @@ Environment::Environment(int length, int height,
   num_food_ = 30;
   AddFood();
   organisms_ = organisms;
-  ResetOrganisms();
+  for (Organism organism : organisms) {
+    speeds_.push_back(organism.speed());
+    sizes_.push_back(organism.size());
+  }
   time_elapsed_ = 0;
 }
 
@@ -181,7 +184,8 @@ void Environment::AddNewOrganisms() {
 }
 
 void Environment::RemoveRandomOrganisms() {
-  double base_probability = (double) organisms_.size() / (organisms_.size() + 1);
+  double base_probability =
+      (double) organisms_.size() / (organisms_.size() + 1);
   for (size_t i = 0; i < organisms_.size(); i++) {
     if (((double)rand() / (double)RAND_MAX) <=
         (base_probability / organisms_[i].size())) {
