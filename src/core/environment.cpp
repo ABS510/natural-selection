@@ -53,6 +53,8 @@ Environment::Environment(std::string file_path) {
     throw std::invalid_argument("The file does not exists!");
   }
   std::string str;
+  // Loop through the file to obtain the first integer. This is done to ignore
+  // any text present at the beginning of the file
   while (!is.eof()) {
     std::getline(is, str);
     try {
