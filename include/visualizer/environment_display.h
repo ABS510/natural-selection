@@ -71,6 +71,8 @@ class EnvironmentDisplay {
   Environment environment_;
   glm::vec2 top_left_corner_;
 
+  const ci::Font font = ci::Font("Arial", 18);
+
   /**
    * Function to draw a Food object
    * @param food The food object to be drawn

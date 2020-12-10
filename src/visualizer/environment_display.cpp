@@ -13,8 +13,8 @@ void EnvironmentDisplay::Draw() {
   ci::gl::drawString(
       "Population:" + std::to_string(environment_.organisms().size()) +
           "\t Day:" + std::to_string(environment_.days()),
-      top_left_corner_ - glm::vec2(0,18), ci::Color8u("white"),
-      ci::Font("Arial",18));
+      top_left_corner_ - glm::vec2(0,font.getSize()), ci::Color8u("white"),
+      font);
 
   DrawEnvironment();
 
