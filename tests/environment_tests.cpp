@@ -52,8 +52,8 @@ TEST_CASE("End Of Day") {
 }
 
 TEST_CASE("Reading from file") {
-  SECTION("Valid File") {
-    Environment environment("data/setup1");
+  SECTION("Valid File with text at the beginning") {
+    Environment environment("tests/data/valid_setup1");
     REQUIRE(environment.length() == 600);
     REQUIRE(environment.height() == 700);
     REQUIRE(environment.organisms().size() == 4);
@@ -61,11 +61,20 @@ TEST_CASE("Reading from file") {
     REQUIRE(environment.food()[0].calories_ == 5000.0 / 30);
   }
 
+  SECTION("Valid File with no text at the beginning") {
+    Environment environment("tests/data/valid_setup2");
+    REQUIRE(environment.length() == 800);
+    REQUIRE(environment.height() == 700);
+    REQUIRE(environment.organisms().size() == 8);
+    REQUIRE(environment.food().size() == 90);
+    REQUIRE(environment.food()[0].calories_ == 6000.0 / 90);
+  }
+
   SECTION("Invalid File Format") {
-    REQUIRE_THROWS_AS(Environment("data/invalid_setup"), std::exception);
+    REQUIRE_THROWS_AS(Environment("tests/data/invalid_setup"), std::exception);
   }
 
   SECTION("Nonexistent File") {
-    REQUIRE_THROWS_AS(Environment("data/na"), std::invalid_argument);
+    REQUIRE_THROWS_AS(Environment("tests/data/na"), std::invalid_argument);
   }
 }
