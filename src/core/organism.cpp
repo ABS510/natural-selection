@@ -17,15 +17,34 @@ Organism::Organism(double speed, double size)
   velocity_ = glm::vec2(0,speed_);
 }
 
-void Organism::Eat(const Food& food) {
-  calories_gained_ += food.calories_;
+bool Organism::Eat(const Food& food) {
+  if (!WillReplicate()) {
+    if (glm::length(food.position_ - position_) <= size_) {
+      calories_gained_ += food.calories_;
+      return true;
+    }
+  }
+  return false;
 }
 
-void Organism::Move() {
-  // Generate a random angle between 0 and 2pi
-  double rand_angle = (2 * M_PI * ( (double) rand() / (double) RAND_MAX));
-  velocity_ = glm::vec2(speed_ * cos(rand_angle), speed_ * sin(rand_angle));
-  position_ += velocity_;
+void Organism::Move(int length, int height, const std::vector<Food>& food) {
+  if (!WillReplicate()) {
+    glm::vec2 target(length / 2, height / 2);
+    double min_dist = length * length + height * height;
+    for (const Food& food_ : food) {
+      if (glm::length(food_.position_ - position_) < min_dist &&
+          glm::length(food_.position_ - position_) < 5 * size_) {
+        target = food_.position_;
+        min_dist = glm::length(food_.position_ - position_);
+      }
+    }
+    velocity_ =
+        (float)speed_ * (target - position_) / glm::length(target - position_);
+    if (food.size() == 0) {
+      velocity_ = glm::vec2(0, 0);
+    }
+    position_ += velocity_;
+  }
 }
 
 bool Organism::WillSurvive() const {
@@ -42,11 +61,23 @@ Organism Organism::Replicate() const {
   return Organism(new_speed, new_size);
 }
 
-void Organism::ResetForDay(glm::vec2 pos, glm::vec2 vel) {
+void Organism::ResetForDay(glm::vec2 pos) {
   position_ = pos;
-  velocity_ = vel;
   calories_gained_ = 0;
   current_energy_expended_ = 0;
+}
+
+double Organism::ExpendEnergy() {
+  double energy_expended = speed_ * speed_ + 0.006 * size_ * size_ * size_;
+  current_energy_expended_ += energy_expended;
+  return energy_expended;
+}
+
+void Organism::Update(int length, int height, const std::vector<Food>& food) {
+  if (current_energy_expended_ < max_energy_) {
+    Move(length, height, food);
+    ExpendEnergy();
+  }
 }
 
 void Organism::SetSpeedGene(double transfer_coefficient,

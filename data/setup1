@@ -1,0 +1,21 @@
+Order of variables: environment length, environment height, length of day,
+initial number of organisms, initial speed of organisms, initial size of organisms,
+energy of each organism, survivability threshold, replication threshold, speed gene transfer coefficient,
+speed gene max change, size gene transfer coefficient, size gene max change, number of food objects,
+total calories of food
+
+600
+700
+240
+4
+8
+10
+2700
+150
+300
+40
+0.1
+20
+0.15
+30
+5000

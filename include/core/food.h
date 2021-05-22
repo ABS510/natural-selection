@@ -19,6 +19,17 @@ struct Food {
     calories_ = calories;
   }
 
+  /**
+   * Constructor for the food object
+   * @param position- The position of the food
+   * @param calories- the calories/energy contained by the food
+   */
+  Food(glm::vec2 position, double calories) {
+    position_ = position;
+    color_ = "white";
+    calories_ = calories;
+  }
+
   // The location of the food object in the environment
   glm::vec2 position_;
   // The color of the food (used for drawing)

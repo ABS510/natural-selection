@@ -39,7 +39,7 @@ double Gene::CalculateTraitChange(double trait_value, double random_num) {
 
 double Gene::GenerateEvolvedTrait(double trait_value) {
   // Generate random double between -1 and 1
-  double random_number = (2 * ( (double) rand() / (double) RAND_MAX)) - 1;
+  double random_number = (2 * ((double) rand() / (double) RAND_MAX)) - 1;
   double trait_change = CalculateTraitChange(trait_value, random_number);
   double evolved_trait_value = trait_change + trait_value;
   return evolved_trait_value;
