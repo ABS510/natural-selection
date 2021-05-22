@@ -55,7 +55,7 @@ TEST_CASE("Replicate") {
 TEST_CASE("Expend Energy") {
   SECTION("0 speed") {
     Organism organism (0, 10);
-    REQUIRE(organism.ExpendEnergy() == 1);
+    REQUIRE(organism.ExpendEnergy() == 6);
   }
 
   SECTION("0 size") {
@@ -65,7 +65,7 @@ TEST_CASE("Expend Energy") {
 
   SECTION("Random size and speed") {
     Organism organism (7, 12);
-    REQUIRE(organism.ExpendEnergy() == 50.728);
+    REQUIRE(organism.ExpendEnergy() == 59.368);
   }
 }
 

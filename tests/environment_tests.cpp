@@ -40,3 +40,41 @@ TEST_CASE("Remove Dead Organisms") {
   environment.RemoveDeadOrganisms();
   REQUIRE(environment.organisms().size() == 2);
 }
+
+TEST_CASE("End Of Day") {
+  Environment environment(200, 200);
+  for (size_t i = 0; i < 239; i++) {
+    environment.Update();
+  }
+  REQUIRE_FALSE(environment.IsEndOfDay());
+  environment.Update();
+  REQUIRE(environment.IsEndOfDay());
+}
+
+TEST_CASE("Reading from file") {
+  SECTION("Valid File with text at the beginning") {
+    Environment environment("tests/data/valid_setup1");
+    REQUIRE(environment.length() == 600);
+    REQUIRE(environment.height() == 700);
+    REQUIRE(environment.organisms().size() == 4);
+    REQUIRE(environment.food().size() == 30);
+    REQUIRE(environment.food()[0].calories_ == 5000.0 / 30);
+  }
+
+  SECTION("Valid File with no text at the beginning") {
+    Environment environment("tests/data/valid_setup2");
+    REQUIRE(environment.length() == 800);
+    REQUIRE(environment.height() == 700);
+    REQUIRE(environment.organisms().size() == 8);
+    REQUIRE(environment.food().size() == 90);
+    REQUIRE(environment.food()[0].calories_ == 6000.0 / 90);
+  }
+
+  SECTION("Invalid File Format") {
+    REQUIRE_THROWS_AS(Environment("tests/data/invalid_setup"), std::exception);
+  }
+
+  SECTION("Nonexistent File") {
+    REQUIRE_THROWS_AS(Environment("tests/data/na"), std::invalid_argument);
+  }
+}
